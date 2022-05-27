@@ -22,6 +22,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#disclaimer">Disclaimer</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -32,7 +33,7 @@ To enable enhanced accountability of Drones and Unmanned Aerial Vehicles (UAVs) 
 
 The enforcement of such a rule, mandatory by 2022, generated significant concerns on UAV operators, primarily because of privacy issues derived by the indiscriminate broadcast of the plain-text identity of the UAVs on the wireless channel.
 
-First solutions to guarantee UAVs anonymity in the RemoteID settings are starting to appear in the literature (see [[Tedeschi et.al]](https://dl.acm.org/doi/10.1145/3485832.3485834)), but they fall short in guaranteeing the possibility to Critical Infrastructure (CI) operators to autonomously authenticate RemoteID messages. As a result, the FAA is heavily involved, not only in the deanonymization process but also in the authentication of received packets. Overall, such heavy involvement slows-down the chances of deployments of such solutions.
+First solutions to guarantee UAVs anonymity in the RemoteID settings are starting to appear in the literature (see [Tedeschi et.al](https://dl.acm.org/doi/10.1145/3485832.3485834)), but they fall short in guaranteeing the possibility to Critical Infrastructure (CI) operators to autonomously authenticate RemoteID messages. As a result, the FAA is heavily involved, not only in the deanonymization process but also in the authentication of received packets. Overall, such heavy involvement slows-down the chances of deployments of such solutions.
 
 In this project, we plan to advance the state of the art by providing solutions for anonymous and verifiable remote identification of commercial drones and UAVs. To this aim, we plan to apply anonymous verifiable group signatures in the context of UAVs. Such cryptographic schemes allow members of a group to generate anonymous messages, whose authenticity can be verified by the receiving entities through the cryptographic verification of the association between the transmitting entity and the group. At the same time, such schemes allow the identification of the specific transmitter by a Trusted Party, when illegitimate activities are detected.
 
@@ -52,19 +53,19 @@ _Hardware Requirements_
 - GPS Module (drone---on-board)
 - MAVLink Telemetry Module (drone---on-board)
 - Drone Controller compatible with the MAVLink telemetry protocol (optional)
-- HackRF (or another SDR) to spoof GPS Signal Indoor - a TXCO is a plus
+- [HackRF](https://greatscottgadgets.com/hackrf/) (or another SDR) to spoof GPS Signal Indoor - a TXCO is a plus
 - AWUS036ACH - USB Type-C dual-band AC1200 WiFi adapter (1 for the Generic Receiver, 1 for the Transmitter, 1 for the Authority)
 
 _Software Requirements_
 
-- A laptop with a distro GNU/Linux (e.g. Ubuntu)
-- Wireshark
-- Visual Studio Code as IDE
-- g++ compiler and the correspondent toolchain
-- MAVSDK C++
-- PBC
-- Libtins
-- gps-sdr-sim
+- A laptop with a distro GNU/Linux (e.g. [Ubuntu](https://ubuntu.com/))
+- [Wireshark](https://www.wireshark.org/)
+- [VSC](https://code.visualstudio.com/)
+- [g++](https://courses.cs.washington.edu/courses/cse373/99au/unix/g++.html)
+- [MAVSDK C++ Library](https://mavsdk.mavlink.io/main/en/cpp/)
+- [PBC Cryptography Library](https://crypto.stanford.edu/pbc/times.html)
+- [libtins](https://libtins.github.io/)
+- [gps-sdr-sim](https://github.com/osqzss/gps-sdr-sim)
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -100,7 +101,6 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
 <!-- LICENSE -->
 ## License
 
@@ -109,11 +109,17 @@ Distributed under the XXX License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
 <!-- CONTACT -->
 ## Contact
 
 Pietro Tedeschi - pietro dot tedeschi at tii dot ae 
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- DISCLAIMER -->
+## Disclaimer
+
+Any actions and or activities related to the material contained within this github repository is solely your responsibility. The misuse of the information in this repository can result in criminal charges brought against the persons in question. The author(s) will not be held responsible in the event any criminal charges be brought against any individuals misusing the information in this repository to break the law.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
