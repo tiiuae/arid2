@@ -38,6 +38,51 @@ In this project, we plan to advance the state of the art by providing solutions 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+Our implementation, whose source code has been released as open-source, leverages popular libraries and tools, such as MAVSDK, and PBC Crypto Library, supported by the large variety of commercial UAVs that owns a GNU/Linux based mission computer. These features contribute to enhancing the impact of ARID2, demonstrating its deployability to improving the quality of the provided security services in real-world UAV systems.
+
+
+### Prerequisites
+
+_Hardware Requirements_
+
+- A programmable drone with a GNU/Linux embedded operating system
+- GPS Module (drone---on-board)
+- MAVLink Telemetry Module (drone---on-board)
+- Drone Controller compatible with the MAVLink telemetry protocol (optional)
+- HackRF (or another SDR) to spoof GPS Signal Indoor - a TXCO is a plus
+- AWUS036ACH - USB Type-C dual-band AC1200 WiFi adapter (1 for the Generic Receiver, 1 for the Transmitter, 1 for the Authority)
+
+_Software Requirements_
+
+- A laptop with a distro GNU/Linux (e.g. Ubuntu)
+- Wireshark
+- Visual Studio Code as IDE
+- g++ compiler and the correspondent toolchain
+- MAVSDK C++
+- PBC
+- Libtins
+- gps-sdr-sim
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [x] Presentation
+- [x] Porting the code on Raspberry Pi 4
+- [x] Custom IEEE 802.11 PDU
+- [x] ARID2 Wireshark Dissector
+- [x] SHA 1 bugfix
+- [x] FCS dirty bytes
+- [ ] Energy Consumption Test
+- [ ] Radio Timings/Energy Consumption Test
+
+See the [open issues](issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
 <!-- CONTRIBUTING -->
 ## Contributing
 
