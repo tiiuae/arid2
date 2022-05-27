@@ -76,6 +76,7 @@ _Software Requirements_
 - [x] ARID2 Wireshark Dissector
 - [x] SHA 1 bugfix
 - [x] FCS dirty bytes
+- [ ] ProVerif Formal Verification
 - [ ] Energy Consumption Test
 - [ ] Radio Timings/Energy Consumption Test
 
