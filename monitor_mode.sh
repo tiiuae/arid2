@@ -1,5 +1,5 @@
 #!/bin/bash          
-export WIFI_INT=wlx00c0caaf60fe
+export WIFI_INT=wlan0
 sudo ip link set $WIFI_INT down
 sudo iw dev $WIFI_INT set type monitor
 sudo ip link set $WIFI_INT up
