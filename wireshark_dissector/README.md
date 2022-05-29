@@ -9,4 +9,5 @@
 7) Click on Help and then About Wireshark.
 8) Check the plugins tab again and make sure the ARID plugin is installed.
 
-[[https://github.com/tiiuae/arid2/blob/master/wireshark_dissector/img/ws.png|alt=ARID2]]
+### Example
+![Wireshark Dissector](ws.png?raw=true "ARID Wireshark Dissector")
