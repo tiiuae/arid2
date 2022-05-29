@@ -4,20 +4,15 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#introduction">Project Introduction</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
+    <li><a href="#introduction">Project Introduction</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation">How to Compile and Run</a></li>
+        <li><a href="wireshark">WireShark Dissector</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -66,6 +61,20 @@ _Software Requirements_
 - [PBC Cryptography Library](https://crypto.stanford.edu/pbc/times.html)
 - [libtins](https://libtins.github.io/)
 - [gps-sdr-sim](https://github.com/osqzss/gps-sdr-sim)
+
+### How to Compile and Run
+To compile from source for ARID, you should use the following syntax (example for ```sign.c```):
+
+```
+g++ -std=c++17 -L/usr/lib -I/usr/local/include/mavsdk !(setup|join|verify|open).cpp ./sha1/*.cpp ./base58/*.cpp -o sign -l pbc -l gmp -ltins -lmavsdk -lmavsdk_telemetry
+```
+Further, in order to run the code, please verify that you wireless network card interface is in [monitor mode](monitor_mode.sh) and supports the packet injection.
+
+```sudo ./sign [WIFI_INTERFACE_IN_MONITOR_MODE] < param/a.param```
+
+### WireShark Dissector
+Please follow the instructions provided in the [wireshark dissector](./wireshark_dissector) folder.
+
 
 <!-- ROADMAP -->
 ## Roadmap
