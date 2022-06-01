@@ -89,7 +89,7 @@ Please follow the instructions provided in the [wireshark dissector](./wireshark
 - [ ] Energy Consumption Test
 - [ ] Radio Timings/Energy Consumption Test
 
-See the [open issues](issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/tiiuae/arid2/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
