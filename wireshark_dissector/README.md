@@ -11,3 +11,8 @@
 
 ### Example
 ![Wireshark Dissector](ws.png?raw=true "ARID Wireshark Dissector")
+
+### ARID 2 IEEE 802.11 Frame
+IEEE 802.11 custom frame designed for the ARID 2 protocol.
+
+![ARID Frame](arid_frame.jpeg?raw=true "ARID Frame")
