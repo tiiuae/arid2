@@ -86,8 +86,8 @@ Please follow the instructions provided in the [wireshark dissector](./wireshark
 - [x] SHA 1 bugfix
 - [x] FCS dirty bytes
 - [ ] ProVerif Formal Verification
-- [ ] Energy Consumption Test
-- [ ] Radio Timings/Energy Consumption Test
+- [x] Cryptography Energy Consumption Test
+- [x] Radio Timings/Energy Consumption Test
 
 See the [open issues](https://github.com/tiiuae/arid2/issues) for a full list of proposed features (and known issues).
 
