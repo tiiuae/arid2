@@ -10,7 +10,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">How to Compile and Run</a></li>
-        <li><a href="wireshark">WireShark Dissector</a></li>
+        <li><a href="#wireshark">WireShark Dissector</a></li>
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
