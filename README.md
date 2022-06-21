@@ -11,6 +11,7 @@
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">How to Compile and Run</a></li>
         <li><a href="#wireshark">WireShark Dissector</a></li>
+        <li><a href="#proverif">Formal Security Verification with ProVerif</a></li>
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -74,6 +75,12 @@ Further, in order to run the code, please verify that you wireless network card 
 ### WireShark Dissector
 Please follow the instructions provided in the [wireshark dissector](./wireshark_dissector) folder.
 
+### Formal Security Verification with ProVerif
+The security properties of ```ARID 2``` have been verified formally and experimentally by using the open-source tool ProVerif 2.04pl1, demonstrating enhanced security protection with respect to state-of-the-art approaches.
+
+In order to test the security properties, download the file arid2.pv and run: ```./proverif arid2.pv | grep "RESULT"```.
+
+![proverif_result](arid2.png?raw=true "ProVerif")
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -84,7 +91,7 @@ Please follow the instructions provided in the [wireshark dissector](./wireshark
 - [x] ARID2 Wireshark Dissector
 - [x] SHA 1 bugfix
 - [x] FCS dirty bytes
-- [ ] ProVerif Formal Verification
+- [X] ProVerif Formal Verification
 - [x] Cryptography Energy Consumption Test
 - [x] Radio Timings/Energy Consumption Test
 
