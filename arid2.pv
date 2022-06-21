@@ -1,0 +1,198 @@
+(*
+Pietro Tedeschi
+Anonymous Remote IDentification of Unmanned Aerial Vehicles (ARID2)
+*)
+
+(*--Dolev-Yao model Open Channels--*)
+free dr:channel. (*Public Channel between UAV and receiver*)
+free ra:channel. (*Public Channel between receiver and authority*)
+
+(*--Private Channel between UAV A and the authority Auth--*)
+free da:channel [private]. 
+
+(* Types *)
+type nonce.
+type ts.
+
+fun noncetobitstring (nonce):bitstring [data, typeConverter].
+
+(* Authority Cryptographic Material *)
+free x: bitstring [private].
+free y: bitstring [private].
+
+free h: bitstring [private].
+free x1: bitstring [private].
+free x2: bitstring [private].
+free x3: bitstring [private].
+free x4: bitstring [private].
+free x5: bitstring [private].
+
+free g:bitstring.
+
+(* UAV real identity *)
+free IDA: bitstring [private].
+free Pi1: bitstring [private].
+free Pi2: bitstring [private].
+
+
+(* Auxiliary Functions *)
+fun pow(bitstring, bitstring):bitstring.
+fun mul(bitstring, bitstring):bitstring.
+fun add(bitstring, bitstring):bitstring.
+fun sub(bitstring, bitstring):bitstring.
+fun div(bitstring, bitstring):bitstring.
+fun bilinear(bitstring, bitstring):bitstring.
+fun hash(bitstring):bitstring.
+
+(*--Check timestamp freshness operation--*)
+fun freshness(ts, bool): bool
+reduc forall T: ts; freshness(T, true) = true
+otherwise forall T: ts; freshness(T, false) = false.
+
+(*Events*)
+event acceptUAV(bitstring).
+event termAuth(bitstring).
+event acceptRecv(bitstring).
+event termRecv(bitstring).
+
+(* Authentication *)
+query id: bitstring; event(termAuth(id)) ==> event(acceptUAV(id)).
+
+
+(* Test if IDA is secret *)
+query attacker(IDA).
+noninterf IDA.
+
+
+let auth () =  
+  let gt = bilinear(g,g) in
+  let X = pow(g, x) in
+  let Y = pow(gt, y) in
+  let y1 = mul(pow(gt, x1),pow(h, x2)) in
+  let y2 = mul(pow(gt, x3),pow(h, x4)) in
+  let y3 = pow(gt,x5) in
+
+  out(ra, (g,gt,X,Y,h,y1,y2,y3));
+  out(dr, (g,gt,X,Y,h,y1,y2,y3));
+
+  in(da, (IDA:bitstring, n1:bitstring, Sk:bitstring, Pi1:bitstring));
+  
+  let gamma = div(pow(g,Sk),pow(Pi1, n1)) in
+  let n2  = hash((g,gamma)) in
+  if n1 = n2 then
+    new r: nonce;
+    let ai = pow(g, noncetobitstring(r)) in
+    let bi = pow(ai, y) in
+    let ci = mul(pow(ai, x), pow(Pi1, mul(mul(noncetobitstring(r), x), y))) in
+    let Pi2 = bilinear(Pi1, g) in
+    out(ra, (ai, bi, ci));
+  
+  (* Signature Verification and Opening Phase *)
+  in(ra, ((S_ro:bitstring, S_mu:bitstring, S_ni:bitstring, T1:bitstring, T2:bitstring, T3:bitstring, T4:bitstring, T5:bitstring, T6:bitstring, T7:bitstring, c:bitstring, m:bitstring, tA:ts), checkT:bool));
+  if checkT = true then
+  let H = hash((T1,T2,T3)) in
+  let R_1 = div(pow(bilinear(g, T7), S_ro), mul(pow(bilinear(X, T6), S_mu), pow(bilinear(X, T5), H))) in
+  let R_2 = div(pow(gt, S_ni), pow(T1, H)) in
+  let R_3 = sub(pow(h, S_ni), pow(T2, H)) in
+  let R_4 = sub(mul(pow(y1, S_ni),pow(gt, m)), pow(T3, H)) in
+  let R_5 = div(mul(pow(y2, S_ni),pow(y3, mul(H, S_ni))), pow(T4, H)) in
+  
+  let c_1 = hash((R_1, R_2, R_3, R_4, R_5, g, gt, X, Y, h, y1, y2, y3, m)) in
+
+  if c = c_1 then
+    if bilinear(T5,Y) = bilinear(g, T6) then
+      let H = hash((T1,T2,T3)) in
+      let T4_r = mul(pow(T1, add(x3, mul(x5, H))), pow(T2, x4)) in
+      if T4 = T4_r then
+        let Pi2_rr = div(T3, mul(pow(T1, x1), pow(T2, x2))) in
+        if Pi2 = Pi2_rr then
+          event termAuth(IDA).
+
+
+
+let UAV() = 
+  in (ra, (g:bitstring,gt:bitstring,X:bitstring,Y:bitstring,h:bitstring,y1:bitstring,y2:bitstring,y3:bitstring));
+  new ki: nonce;
+  new rk: nonce;
+  let Pi1 = pow(g, noncetobitstring(ki)) in
+  let R   = pow(g, noncetobitstring(rk)) in
+  let n1  = hash((g,R)) in
+  let Sk  = add(mul(n1, noncetobitstring(ki)),noncetobitstring(rk)) in
+  out(da, (IDA, n1, Sk, Pi1));
+
+  in(ra, (ai:bitstring, bi:bitstring, ci:bitstring));
+
+  (* Signature Phase Generation *)
+  new u: nonce;
+  new r_s: nonce; (* r, r'*)
+  new r1_s: nonce;
+  
+  new ro: nonce;
+  new mu: nonce;
+  new ni: nonce;
+
+  new m: bitstring;
+  new tA: ts;
+
+  let Pi2r = bilinear(Pi1, g) in
+  let T1 = pow(gt, noncetobitstring(u)) in
+  let T2 = pow(h, noncetobitstring(u)) in
+  let T3 = mul(pow(y1, noncetobitstring(u)), Pi2r) in
+  
+  let T4 = mul(pow(y2, noncetobitstring(u)), pow(y3, mul(noncetobitstring(u), hash((T1,T2,T3))))) in
+  
+  let T5 = pow(ai, noncetobitstring(r1_s)) in
+  let T6 = pow(bi, noncetobitstring(r1_s)) in
+  let T7 = pow(ci, mul(noncetobitstring(r_s), noncetobitstring(r1_s))) in
+
+  let R1 = div(pow(bilinear(g,T7),noncetobitstring(ro)), pow(bilinear(X,T6),noncetobitstring(mu))) in
+  let R2 = pow(gt, noncetobitstring(ni)) in
+  let R3 = pow(h, noncetobitstring(ni)) in
+  let R4 = mul(pow(y1, noncetobitstring(ni)), pow(gt, noncetobitstring(mu))) in
+  let R5 = pow(y3, mul(noncetobitstring(ni),hash((T1,T2,T3)))) in
+  
+  let c = hash((R1, R2, R3, R4, R5, g, gt, X, Y, h, y1, y2, y3, m)) in
+  let S_ro = add(div(c, noncetobitstring(r_s)), noncetobitstring(ro)) in
+  let S_mu = add(mul(c, noncetobitstring(ki)), noncetobitstring(mu)) in
+  let S_ni = add(mul(c, noncetobitstring(u)), noncetobitstring(ni)) in
+
+  event acceptUAV(IDA);
+  out(ra, ((S_ro, S_mu, S_ni, T1, T2, T3, T4, T5, T6, T7, c, m, tA),freshness(tA, true)));
+  
+  event acceptRecv(IDA);
+  out(dr, ((S_ro, S_mu, S_ni, T1, T2, T3, T4, T5, T6, T7, c, m, tA), freshness(tA, true))).
+
+
+
+let receiver() =
+  in(dr, (g:bitstring,gt:bitstring,X:bitstring,Y:bitstring,h:bitstring,y1:bitstring,y2:bitstring,y3:bitstring));
+  
+  (* Signature Verification Phase *)
+  in(dr, ((S_ro:bitstring, S_mu:bitstring, S_ni:bitstring, T1:bitstring, T2:bitstring, T3:bitstring, T4:bitstring, T5:bitstring, T6:bitstring, T7:bitstring, c:bitstring, m:bitstring, tA:ts), checkT:bool));
+  if checkT = true then
+  let H = hash((T1,T2,T3)) in
+  let R_1 = div(pow(bilinear(g, T7), S_ro), mul(pow(bilinear(X, T6), S_mu), pow(bilinear(X, T5), H))) in
+  let R_2 = div(pow(gt, S_ni), pow(T1, H)) in
+  let R_3 = sub(pow(h, S_ni), pow(T2, H)) in
+  let R_4 = sub(mul(pow(y1, S_ni),pow(gt, m)), pow(T3, H)) in
+  let R_5 = div(mul(pow(y2, S_ni),pow(y3, mul(H, S_ni))), pow(T4, H)) in
+  
+  let c_1 = hash((R_1, R_2, R_3, R_4, R_5, g, gt, X, Y, h, y1, y2, y3, m)) in
+
+  if c = c_1 then
+    if bilinear(T5,Y) = bilinear(g, T6) then
+      event termRecv(IDA).
+
+
+let arid2 =
+  ! (auth() | UAV() | receiver()).
+  
+process arid2
+
+(* Verification summary:
+
+Query event(termAuth(id)) ==> event(acceptUAV(id)) is true.
+
+Query not attacker(IDA[]) is true.
+
+Non-interference IDA is true. *)
